@@ -1,7 +1,6 @@
 # made by Louka D.
 
 from random import randint
-import os
 
 def add_player():
 	global player_x, player_y
@@ -72,7 +71,7 @@ floor = ' '
 box = '▣'
 hole = '⬚'
 player = '☻'
-solid_objects = [wall, hole]
+solid_objects = [wall, hole] # objects that the player cannot push / cross
 
 grid_size = 13
 grid = [
