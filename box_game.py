@@ -24,42 +24,42 @@ def generate_map():
 	grid[box_y][box_x] = box
 	grid[hole_y][hole_x] = hole
 
-def move_player(user_input, player_position):
+def move_player(user_input, displacement_coordinate):
 	global player_x, player_y
 
-	if user_input in ['w', 's'] and grid[player_y + player_position][player_x] not in solid_objects:
-		if grid[player_y + player_position][player_x] == box:
-			if grid[box_y + player_position][box_x] != wall:
-				move_box(user_input, player_position)
+	if user_input in ['w', 's'] and grid[player_y + displacement_coordinate][player_x] not in solid_objects:
+		if grid[player_y + displacement_coordinate][player_x] == box:
+			if grid[box_y + displacement_coordinate][box_x] != wall:
+				move_box(user_input, displacement_coordinate)
 			else:
 				return
 
 		grid[player_y][player_x] = floor
-		player_y += player_position
+		player_y += displacement_coordinate
 		grid[player_y][player_x] = player
 
-	elif user_input in ['a', 'd'] and grid[player_y][player_x + player_position] not in solid_objects:
-		if grid[player_y][player_x + player_position] == box:
-			if grid[box_y][box_x + player_position] != wall:
-				move_box(user_input, player_position)
+	elif user_input in ['a', 'd'] and grid[player_y][player_x + displacement_coordinate] not in solid_objects:
+		if grid[player_y][player_x + displacement_coordinate] == box:
+			if grid[box_y][box_x + displacement_coordinate] != wall:
+				move_box(user_input, displacement_coordinate)
 			else:
 				return
 
 		grid[player_y][player_x] = floor
-		player_x += player_position
+		player_x += displacement_coordinate
 		grid[player_y][player_x] = player
 
-def move_box(user_input, box_position):
+def move_box(user_input, displacement_coordinate):
 	global box_x, box_y
 
 	if user_input in ['w', 's']:
 		grid[box_y][box_x] = floor
-		box_y += box_position
+		box_y += displacement_coordinate
 		grid[box_y][box_x] = box
 
 	elif user_input in ['a', 'd']:
 		grid[box_y][box_x] = floor
-		box_x += box_position
+		box_x += displacement_coordinate
 		grid[box_y][box_x] = box
 	
 def print_grid():
@@ -89,8 +89,10 @@ add_player()
 box_x, box_y = 0, 0
 generate_map()
 
+score = 0
 game_on = True
 while game_on == True:
+	print(f'Score : {score}')
 	print_grid()
 
 	user_input = input(': ')
@@ -110,6 +112,8 @@ while game_on == True:
 		if hole in i:
 			index = grid.index(i)
 	if hole not in grid[index]:
+		score += 1
+		
 		grid[box_y][box_x] = floor
 		generate_map()
 
